@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Play, Image, Headphones, ShoppingBag, Heart, Share2, MessageCircle, Eye, Filter, Search, Star, Download } from 'lucide-react';
+import { Play, Image, Headphones, ShoppingBag, Heart, Share2, MessageCircle, Eye, Filter, Search, Star, Download, Rss } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Media() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState('streaming');
+  const [activeTab, setActiveTab] = useState('stream');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const mediaContent = {
-    streaming: [
+    stream: [
       {
         id: 1,
         title: 'Digital Marketing Masterclass Preview',
@@ -19,7 +19,8 @@ export default function Media() {
         views: 12500,
         likes: 890,
         category: 'education',
-        isPremium: false
+        isPremium: false,
+        type: 'movie'
       },
       {
         id: 2,
@@ -30,8 +31,43 @@ export default function Media() {
         views: 8900,
         likes: 654,
         category: 'lifestyle',
-        isPremium: true
+        isPremium: true,
+        type: 'music-video'
       }
+    ],
+    listen: [
+      {
+        id: 1,
+        title: 'People in Tech: Breaking Barriers',
+        creator: 'Dr. Sarah Johnson',
+        thumbnail: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=400',
+        duration: '45:20',
+        plays: 5600,
+        category: 'business',
+        isPremium: false,
+        type: 'podcast'
+      },
+      {
+        id: 2,
+        title: 'Creative Minds Anthem',
+        creator: 'The Flourish Band',
+        thumbnail: 'https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=400',
+        duration: '3:15',
+        plays: 12000,
+        category: 'music',
+        isPremium: false,
+        type: 'audio-music'
+      }
+    ],
+    blog: [
+        {
+            id: 1,
+            title: '10 Tips for a Killer Personal Brand',
+            creator: 'Alex Chen',
+            thumbnail: 'https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=400',
+            readTime: '5 min read',
+            category: 'branding',
+        }
     ],
     gallery: [
       {
@@ -53,19 +89,7 @@ export default function Media() {
         isPremium: true
       }
     ],
-    podcast: [
-      {
-        id: 1,
-        title: 'People in Tech: Breaking Barriers',
-        creator: 'Dr. Sarah Johnson',
-        thumbnail: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=400',
-        duration: '45:20',
-        plays: 5600,
-        category: 'business',
-        isPremium: false
-      }
-    ],
-    products: [
+    resources: [
       {
         id: 1,
         title: 'Social Media Templates Pack',
@@ -85,22 +109,34 @@ export default function Media() {
         rating: 4.9,
         sales: 890,
         category: 'ebooks'
+      },
+      {
+          id: 3,
+          title: 'Cinematic LUTs Pack',
+          creator: 'Color Grade Co.',
+          image: 'https://images.pexels.com/photos/4057663/pexels-photo-4057663.jpeg?auto=compress&cs=tinysrgb&w=400',
+          price: 95000,
+          rating: 4.7,
+          sales: 540,
+          category: 'presets'
       }
     ]
   };
 
   const categories = {
-    streaming: ['all', 'education', 'lifestyle', 'business', 'creative'],
+    stream: ['all', 'movie', 'music-video', 'education', 'lifestyle', 'business', 'creative'],
+    listen: ['all', 'podcast', 'audio-music', 'business', 'lifestyle', 'education', 'wellness'],
+    blog: ['all', 'branding', 'marketing', 'creativity', 'lifestyle'],
     gallery: ['all', 'design', 'photography', 'art', 'fashion'],
-    podcast: ['all', 'business', 'lifestyle', 'education', 'wellness'],
-    products: ['all', 'templates', 'ebooks', 'courses', 'presets']
+    resources: ['all', 'templates', 'ebooks', 'courses', 'presets']
   };
 
   const tabs = [
-    { id: 'streaming', label: 'Streaming', icon: <Play className="w-5 h-5" /> },
+    { id: 'stream', label: 'Stream', icon: <Play className="w-5 h-5" /> },
+    { id: 'listen', label: 'Listen', icon: <Headphones className="w-5 h-5" /> },
+    { id: 'blog', label: 'Blog', icon: <Rss className="w-5 h-5" /> },
     { id: 'gallery', label: 'Gallery', icon: <Image className="w-5 h-5" /> },
-    { id: 'podcast', label: 'Podcast', icon: <Headphones className="w-5 h-5" /> },
-    { id: 'products', label: 'Digital Products', icon: <ShoppingBag className="w-5 h-5" /> }
+    { id: 'resources', label: 'Resources', icon: <ShoppingBag className="w-5 h-5" /> }
   ];
 
   const handleFollow = (creatorId: string) => {
@@ -178,20 +214,23 @@ export default function Media() {
               {/* Thumbnail/Image */}
               <div className="relative aspect-video bg-gray-800">
                 <img 
-                  src={activeTab === 'streaming' ? item.thumbnail : activeTab === 'podcast' ? item.thumbnail : item.image} 
+                  src={activeTab === 'stream' ? item.thumbnail : activeTab === 'listen' ? item.thumbnail : activeTab === 'blog' ? item.thumbnail : item.image}
                   alt={item.title} 
                   className="w-full h-full object-cover"
                 />
                 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  {activeTab === 'streaming' && (
+                  {activeTab === 'stream' && (
                     <Play className="w-12 h-12 text-white" />
                   )}
-                  {activeTab === 'podcast' && (
+                  {activeTab === 'listen' && (
                     <Headphones className="w-12 h-12 text-white" />
                   )}
-                  {activeTab === 'products' && (
+                  {activeTab === 'blog' && (
+                    <Rss className="w-12 h-12 text-white" />
+                  )}
+                  {activeTab === 'resources' && (
                     <ShoppingBag className="w-12 h-12 text-white" />
                   )}
                 </div>
@@ -204,9 +243,14 @@ export default function Media() {
                 )}
 
                 {/* Duration/Info */}
-                {(activeTab === 'streaming' || activeTab === 'podcast') && (
+                {(activeTab === 'stream' || activeTab === 'listen') && (
                   <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/70 text-white text-xs rounded">
                     {item.duration}
+                  </div>
+                )}
+                {activeTab === 'blog' && (
+                  <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/70 text-white text-xs rounded">
+                    {item.readTime}
                   </div>
                 )}
               </div>
@@ -218,7 +262,7 @@ export default function Media() {
 
                 {/* Stats */}
                 <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
-                  {activeTab === 'streaming' && (
+                  {activeTab === 'stream' && (
                     <>
                       <div className="flex items-center space-x-1">
                         <Eye className="w-4 h-4" />
@@ -230,7 +274,18 @@ export default function Media() {
                       </div>
                     </>
                   )}
-                  
+                  {activeTab === 'listen' && (
+                    <div className="flex items-center space-x-1">
+                      <Play className="w-4 h-4" />
+                      <span>{item.plays} plays</span>
+                    </div>
+                  )}
+                  {activeTab === 'blog' && (
+                    <div className="flex items-center space-x-1">
+                      <MessageCircle className="w-4 h-4" />
+                      <span>{Math.floor(Math.random() * 100)}</span>
+                    </div>
+                  )}
                   {activeTab === 'gallery' && (
                     <div className="flex items-center space-x-1">
                       <Heart className="w-4 h-4" />
@@ -238,14 +293,7 @@ export default function Media() {
                     </div>
                   )}
                   
-                  {activeTab === 'podcast' && (
-                    <div className="flex items-center space-x-1">
-                      <Play className="w-4 h-4" />
-                      <span>{item.plays} plays</span>
-                    </div>
-                  )}
-                  
-                  {activeTab === 'products' && (
+                  {activeTab === 'resources' && (
                     <>
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-yellow-400" />
@@ -258,7 +306,7 @@ export default function Media() {
 
                 {/* Action Buttons */}
                 <div className="flex space-x-2">
-                  {activeTab === 'products' ? (
+                  {activeTab === 'resources' ? (
                     <>
                       <button className="flex-1 py-2 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all text-sm font-medium">
                         Buy Now
@@ -309,10 +357,11 @@ export default function Media() {
         {mediaContent[activeTab as keyof typeof mediaContent]?.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
-              {activeTab === 'streaming' && <Play className="w-16 h-16 mx-auto mb-4" />}
+              {activeTab === 'stream' && <Play className="w-16 h-16 mx-auto mb-4" />}
+              {activeTab === 'listen' && <Headphones className="w-16 h-16 mx-auto mb-4" />}
+              {activeTab === 'blog' && <Rss className="w-16 h-16 mx-auto mb-4" />}
               {activeTab === 'gallery' && <Image className="w-16 h-16 mx-auto mb-4" />}
-              {activeTab === 'podcast' && <Headphones className="w-16 h-16 mx-auto mb-4" />}
-              {activeTab === 'products' && <ShoppingBag className="w-16 h-16 mx-auto mb-4" />}
+              {activeTab === 'resources' && <ShoppingBag className="w-16 h-16 mx-auto mb-4" />}
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">No content available</h3>
             <p className="text-gray-400">Check back later for new {activeTab} content!</p>

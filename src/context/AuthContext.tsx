@@ -7,7 +7,8 @@ interface User {
   tier: 'free' | 'premium' | 'professional' | 'elite';
   loyaltyPoints: number;
   profileImage?: string;
-  accountType: 'talent' | 'user' | 'agency';
+  accountType: 'creator' | 'member';
+  role: 'creator' | 'member';
   isVerified: boolean;
   joinedDate: Date;
 }
@@ -19,7 +20,14 @@ interface AuthContextType {
   signUp: (userData: any) => Promise<void>;
   signOut: () => void;
   updateUser: (userData: Partial<User>) => void;
+  switchRole: () => void;
 }
+
+export const TIER_POINTS = {
+  premium: 1000,
+  professional: 5000,
+  elite: 10000,
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -54,7 +62,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       name: email.split('@')[0],
       tier: 'free',
       loyaltyPoints: 100,
-      accountType: 'talent',
+      accountType: 'creator',
+      role: 'creator',
       isVerified: false,
       joinedDate: new Date()
     };
@@ -70,7 +79,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       name: userData.name,
       tier: 'free',
       loyaltyPoints: 50,
-      accountType: userData.accountType || 'talent',
+      accountType: userData.accountType || 'creator',
+      role: userData.accountType || 'creator',
       isVerified: false,
       joinedDate: new Date()
     };
@@ -92,8 +102,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const switchRole = () => {
+    if (user) {
+      const newRole = user.role === 'creator' ? 'member' : 'creator';
+      const updatedUser = { ...user, role: newRole, accountType: newRole };
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut, updateUser, switchRole }}>
       {children}
     </AuthContext.Provider>
   );

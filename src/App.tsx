@@ -8,9 +8,15 @@ import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import Media from './pages/Media';
 import Masterclass from './pages/Masterclass';
-import Hiring from './pages/Hiring';
+import Projects from './pages/Projects';
 import Events from './pages/Events';
 import Profile from './pages/Profile';
+import CreatorMembership from './pages/CreatorMembership';
+import MemberMembership from './pages/MemberMembership';
+import Content from './pages/Content';
+import Account from './pages/Account';
+import Connect from './pages/Connect';
+import CareerGuidance from './pages/CareerGuidance';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 
@@ -37,9 +43,15 @@ function AppContent() {
           <Route path="/portfolio" element={user ? <Portfolio /> : <Navigate to="/" />} />
           <Route path="/media" element={user ? <Media /> : <Navigate to="/" />} />
           <Route path="/masterclass" element={user ? <Masterclass /> : <Navigate to="/" />} />
-          <Route path="/hiring" element={user ? <Hiring /> : <Navigate to="/" />} />
+          <Route path="/projects" element={user ? <Projects /> : <Navigate to="/" />} />
           <Route path="/events" element={user ? <Events /> : <Navigate to="/" />} />
           <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
+          <Route path="/creator-membership" element={user ? <CreatorMembership /> : <Navigate to="/" />} />
+          <Route path="/member-membership" element={user ? <MemberMembership /> : <Navigate to="/" />} />
+          <Route path="/content" element={user ? <Content /> : <Navigate to="/" />} />
+          <Route path="/account" element={user ? <Account /> : <Navigate to="/" />} />
+          <Route path="/connect" element={user ? <Connect /> : <Navigate to="/" />} />
+          <Route path="/career-guidance/:masterclassId" element={user ? <CareerGuidance /> : <Navigate to="/" />} />
         </Routes>
       </Router>
     </div>

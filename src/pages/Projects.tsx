@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, Filter, MapPin, Clock, DollarSign, Star, Users, Eye, Briefcase, Building } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-export default function Hiring() {
+export default function Projects() {
   const { user } = useAuth();
   const [viewMode, setViewMode] = useState<'talents' | 'teams'>('talents');
   const [searchQuery, setSearchQuery] = useState('');
@@ -142,6 +142,10 @@ export default function Hiring() {
   });
 
   const handleHire = (id: number, type: 'talent' | 'team') => {
+    if (user?.role === 'creator') {
+      alert('Application sent!');
+      return;
+    }
     if (user?.tier === 'free') {
       alert('Upgrade to Premium to hire talents and teams!');
       return;
@@ -158,14 +162,15 @@ export default function Hiring() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-playfair font-bold text-white mb-2">Hire Talent</h1>
-          <p className="text-gray-300">Find the perfect talent or team for your project</p>
+          <h1 className="text-4xl font-playfair font-bold text-white mb-2">Projects</h1>
+          <p className="text-gray-300">Find the perfect project or team for your skills</p>
         </div>
 
-        {/* View Toggle */}
-        <div className="flex space-x-1 mb-8 glass-effect p-2 rounded-xl w-fit">
-          <button
-            onClick={() => setViewMode('talents')}
+        {/* View Toggle and Submit Button */}
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex space-x-1 glass-effect p-2 rounded-xl w-fit">
+            <button
+              onClick={() => setViewMode('talents')}
             className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
               viewMode === 'talents'
                 ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
@@ -185,6 +190,10 @@ export default function Hiring() {
           >
             <Building className="w-5 h-5" />
             <span>Teams & Agencies</span>
+          </button>
+          </div>
+          <button className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all">
+            Submit a Project
           </button>
         </div>
 
@@ -317,13 +326,13 @@ export default function Hiring() {
                       className="flex-1 py-2 glass-effect text-gray-300 hover:text-white rounded-lg transition-colors flex items-center justify-center space-x-2"
                     >
                       <Eye className="w-4 h-4" />
-                      <span>Portfolio</span>
+                      <span>{user?.role === 'creator' ? 'Send Portfolio' : 'Portfolio'}</span>
                     </button>
                     <button
                       onClick={() => handleHire(talent.id, 'talent')}
                       className="flex-1 py-2 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
                     >
-                      Hire Now
+                      {user?.role === 'creator' ? 'Apply' : 'Hire Now'}
                     </button>
                   </div>
                 </div>
@@ -422,7 +431,7 @@ export default function Hiring() {
                       onClick={() => handleHire(team.id, 'team')}
                       className="flex-1 py-2 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
                     >
-                      Hire Team
+                      {user?.role === 'creator' ? 'Apply' : 'Hire Team'}
                     </button>
                   </div>
                 </div>
