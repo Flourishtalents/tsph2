@@ -152,7 +152,7 @@ export default function CareerGuidance() {
           <h2 className="text-2xl font-semibold text-white mb-6">Ready to Enroll?</h2>
           <p className="text-gray-300 mb-4">Take the next step in your career and enroll in this masterclass today.</p>
           <Link
-            to={`/masterclass`} // Go back to masterclass page for now
+            to={`/masterclass?enroll=${masterclassId}`}
             className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-rose-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
           >
             Enroll Now

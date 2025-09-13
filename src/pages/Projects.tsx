@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 export default function Projects() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<'talents' | 'teams'>('talents');
+  const [viewMode, setViewMode] = useState<'talents' | 'teams' | 'projects'>(user?.role === 'creator' ? 'projects' : 'talents');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedBudget, setSelectedBudget] = useState('all');
@@ -18,6 +18,29 @@ export default function Projects() {
 
   const budgetRanges = [
     'all', 'under-500', '500-1000', '1000-5000', '5000-plus'
+  ];
+
+  const projects = [
+    {
+      id: 1,
+      title: 'Brand Ambassador for Tech Startup',
+      company: 'Innovate Inc.',
+      location: 'Remote',
+      budget: 'UGX 1,500,000',
+      description: 'Looking for an energetic brand ambassador to represent our new app. Must have strong social media presence.',
+      skills: ['Social Media Marketing', 'Brand Representation', 'Content Creation'],
+      type: 'gig'
+    },
+    {
+      id: 2,
+      title: 'Lead Actor for Short Film',
+      company: 'Starlight Pictures',
+      location: 'Kampala, Uganda',
+      budget: 'UGX 2,000,000',
+      description: 'Seeking a male lead actor for a drama short film. Acting experience required.',
+      skills: ['Acting', 'Drama', 'Improvisation'],
+      type: 'casting'
+    }
   ];
 
   const talents = [
@@ -143,6 +166,18 @@ export default function Projects() {
     return matchesCategory && matchesSearch;
   });
 
+  const filteredProjects = projects.filter(project => {
+    const matchesCategory = selectedCategory === 'all' || project.type === selectedCategory;
+    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         project.company.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleApply = (projectId: number) => {
+    alert(`Applied to project ${projectId}`);
+  };
+
   const handleHire = (id: number, type: 'talent' | 'team') => {
     if (!user) {
       alert('Please sign up or sign in to proceed.');
@@ -150,8 +185,8 @@ export default function Projects() {
       return;
     }
     if (user.role === 'creator') {
-      alert('Application sent!');
-      return;
+        handleApply(id);
+        return;
     }
     if (user.tier === 'free') {
       alert('Upgrade to Premium to hire talents and teams!');
@@ -176,30 +211,55 @@ export default function Projects() {
         {/* View Toggle and Submit Button */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex space-x-1 glass-effect p-2 rounded-xl w-fit">
-            <button
-              onClick={() => setViewMode('talents')}
-            className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-              viewMode === 'talents'
-                ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
-                : 'text-gray-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <Users className="w-5 h-5" />
-            <span>Individual Talents</span>
-          </button>
-          <button
-            onClick={() => setViewMode('teams')}
-            className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-              viewMode === 'teams'
-                ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
-                : 'text-gray-300 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <Building className="w-5 h-5" />
-            <span>Teams & Agencies</span>
-          </button>
+            {user?.role === 'creator' ? (
+              <button
+                onClick={() => setViewMode('projects')}
+                className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                  viewMode === 'projects'
+                    ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <Briefcase className="w-5 h-5" />
+                <span>Browse Projects</span>
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={() => setViewMode('talents')}
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                    viewMode === 'talents'
+                      ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Users className="w-5 h-5" />
+                  <span>Individual Talents</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('teams')}
+                  className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                    viewMode === 'teams'
+                      ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
+                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Building className="w-5 h-5" />
+                  <span>Teams & Agencies</span>
+                </button>
+              </>
+            )}
           </div>
-          <button className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all">
+          <button
+            onClick={() => {
+              if (!user) {
+                alert('Please sign up or sign in to submit a project.');
+                navigate('/signin');
+                return;
+              }
+              alert('Project submission feature coming soon!');
+            }}
+            className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all">
             Submit a Project
           </button>
         </div>
@@ -246,7 +306,37 @@ export default function Projects() {
 
         {/* Results */}
         <div className="grid lg:grid-cols-3 gap-6">
-          {viewMode === 'talents' ? (
+          {viewMode === 'projects' ? (
+            filteredProjects.map((project) => (
+              <div key={project.id} className="glass-effect rounded-2xl overflow-hidden hover-lift p-6">
+                <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+                <p className="text-gray-400 text-sm">{project.company}</p>
+                <div className="flex items-center space-x-2 mt-2">
+                    <MapPin className="w-4 h-4 text-rose-400" />
+                    <span className="text-gray-300 text-sm">{project.location}</span>
+                </div>
+                <p className="text-gray-300 text-sm mt-4 line-clamp-2">{project.description}</p>
+                <div className="mt-4">
+                    <div className="flex flex-wrap gap-1">
+                        {project.skills.map((skill, index) => (
+                            <span key={index} className="px-2 py-1 bg-rose-400/20 text-rose-300 text-xs rounded">
+                                {skill}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex items-center justify-between mt-4">
+                    <div className="text-lg font-bold text-white">{project.budget}</div>
+                    <button
+                        onClick={() => handleHire(project.id, 'talent')}
+                        className="flex-1 py-2 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
+                    >
+                        Apply Now
+                    </button>
+                </div>
+              </div>
+            ))
+          ) : viewMode === 'talents' ? (
             filteredTalents.map((talent) => (
               <div key={talent.id} className="glass-effect rounded-2xl overflow-hidden hover-lift">
                 {/* Header */}

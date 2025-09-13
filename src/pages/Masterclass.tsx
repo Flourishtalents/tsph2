@@ -18,11 +18,11 @@ export default function Masterclass() {
     'media-communications',
     'modelling',
     'acting',
+    'literary-culture',
     'film-video-production',
     'audio-production',
     'music',
     'dance',
-    'literary-culture',
     'event-management',
     'marketing-advertising',
     'research-innovation',
@@ -118,6 +118,23 @@ export default function Masterclass() {
       progress: 0
     },
     {
+        id: 9,
+        title: 'Modern Literary Culture',
+        instructor: 'Dr. Evelyn Reed',
+        category: 'literary-culture',
+        duration: '6 weeks',
+        lessons: 15,
+        students: 250,
+        rating: 4.7,
+        price: 680000,
+        level: 'All Levels',
+        thumbnail: 'https://images.pexels.com/photos/2041540/pexels-photo-2041540.jpeg?auto=compress&cs=tinysrgb&w=400',
+        description: 'Explore contemporary literature and its impact on modern culture.',
+        features: ['Literary Analysis', 'Cultural Studies', 'Creative Writing'],
+        isEnrolled: false,
+        progress: 0
+    },
+    {
       id: 6,
       title: 'Film & Video Production Essentials',
       instructor: 'David Lee',
@@ -168,7 +185,11 @@ export default function Masterclass() {
       isEnrolled: false,
       progress: 0
     }
-  ];
+  ].sort((a, b) => {
+    const aIndex = categories.indexOf(a.category);
+    const bIndex = categories.indexOf(b.category);
+    return aIndex - bIndex;
+  })
 
   const workshops = [
     {
@@ -232,44 +253,6 @@ export default function Masterclass() {
           <p className="text-gray-300">Learn from industry experts and advance your career</p>
         </div>
 
-        {/* Mentorship CTA */}
-        <div className="glass-effect p-6 rounded-2xl mb-8 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div>
-              <h3 className="text-xl font-semibold text-white mb-2">Need Mentorship?</h3>
-              <p className="text-gray-300">Get personalized guidance from industry professionals.</p>
-            </div>
-            <button
-              onClick={() => {
-                if (!user) {
-                  alert('Please sign up or sign in to request mentorship.');
-                  navigate('/signin');
-                  return;
-                }
-                setShowMentorshipModal(true);
-                setMentorshipRequestSent(false);
-              }}
-              className="mt-4 md:mt-0 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
-            >
-              Request Mentorship
-            </button>
-          </div>
-        </div>
-
-        {/* Community Support CTA */}
-        <div className="glass-effect p-6 rounded-2xl mb-8 bg-gradient-to-r from-blue-500/20 to-teal-500/20 border border-blue-400/30">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-            <div>
-                <h3 className="text-xl font-semibold text-white mb-2">Community Support</h3>
-                <p className="text-gray-300">Have questions? Get help from our community of creators and experts.</p>
-            </div>
-            <button
-                className="mt-4 md:mt-0 px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
-            >
-                Ask the Community
-            </button>
-            </div>
-        </div>
 
         {/* Search and Filters */}
         <div className="flex flex-col lg:flex-row gap-4 mb-8">
@@ -426,6 +409,45 @@ export default function Masterclass() {
                   <p className="text-gray-200 text-sm">No enrolled courses yet</p>
                 )}
               </div>
+            </div>
+
+            {/* Mentorship CTA */}
+            <div className="glass-effect p-6 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30">
+              <div className="flex flex-col items-start justify-between">
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Need Mentorship?</h3>
+                  <p className="text-gray-300">Get personalized guidance from industry professionals.</p>
+                </div>
+                <button
+                  onClick={() => {
+                    if (!user) {
+                      alert('Please sign up or sign in to request mentorship.');
+                      navigate('/signin');
+                      return;
+                    }
+                    setShowMentorshipModal(true);
+                    setMentorshipRequestSent(false);
+                  }}
+                  className="mt-4 w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
+                >
+                  Request Mentorship
+                </button>
+              </div>
+            </div>
+
+            {/* Community Support CTA */}
+            <div className="glass-effect p-6 rounded-2xl bg-gradient-to-r from-blue-500/20 to-teal-500/20 border border-blue-400/30">
+                <div className="flex flex-col items-start justify-between">
+                <div>
+                    <h3 className="text-xl font-semibold text-white mb-2">Community Support</h3>
+                    <p className="text-gray-300">Have questions? Get help from our community of creators and experts.</p>
+                </div>
+                <button
+                    className="mt-4 w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
+                >
+                    Ask the Community
+                </button>
+                </div>
             </div>
 
             {/* Upcoming Workshops */}
