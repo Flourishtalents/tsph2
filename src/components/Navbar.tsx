@@ -66,99 +66,107 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 glass-effect">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <Crown className="w-8 h-8 text-rose-400" />
-            <span className="text-2xl font-playfair font-bold gradient-text">FlourishTalents</span>
-          </Link>
-
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => {
-              if (!user && (link.label === 'Sign In')) return null;
-              if (!user && (link.label === 'Sign Up')) {
-                return (
-                  <Link key={link.path} to={link.path} className="text-white hover:text-rose-400">
-                    <UserPlus className="w-6 h-6" />
-                  </Link>
-                )
-              }
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                    location.pathname === link.path
-                      ? 'text-rose-400 bg-white/10'
-                      : 'text-white hover:text-rose-400 hover:bg-white/5'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
-            
-            {user && (
-              <>
-                <button className="p-2 rounded-full text-white hover:bg-white/10 transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
-                <div className="relative">
-                  <button
-                    onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-white/10 transition-all"
-                >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-400 to-purple-500 flex items-center justify-center">
-                    {user.profileImage ? (
-                      <img src={user.profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
-                    ) : (
-                      <User className="w-4 h-4 text-white" />
-                    )}
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm font-medium text-white">{user.name}</div>
-                    <div className={`text-xs flex items-center space-x-1 text-yellow-400`}>
-                      <Star className="w-3 h-3" />
-                      <span>{user.loyaltyPoints} Points</span>
-                    </div>
-                  </div>
-                </button>
-
-                {showUserMenu && (
-                  <div className="absolute right-0 mt-2 w-48 glass-effect rounded-lg shadow-xl border border-white/20">
-                    <div className="py-2">
-                      <Link
-                        to="/profile"
-                        className="flex items-center px-4 py-2 text-sm text-white hover:bg-white/10 transition-colors"
-                        onClick={() => setShowUserMenu(false)}
-                      >
-                        <Settings className="w-4 h-4 mr-3" />
-                        Profile Settings
-                      </Link>
-                      <div className="px-4 py-2 text-sm text-gray-300">
-                        Loyalty Points: <span className="text-yellow-400 font-medium">{user.loyaltyPoints}</span>
-                      </div>
-                      <button
-                        onClick={handleSignOut}
-                        className="flex items-center w-full px-4 py-2 text-sm text-red-400 hover:bg-white/10 transition-colors"
-                      >
-                        <LogOut className="w-4 h-4 mr-3" />
-                        Sign Out
-                      </button>
-                    </div>
-                  </div>
-                )}
-                </div>
-              </>
-            )}
+        <div className="flex items-center justify-between h-16">
+          {/* Left Section */}
+          <div className="flex-1 flex items-center justify-start">
+            <Link to="/" className="flex items-center space-x-2">
+              <Crown className="w-8 h-8 text-rose-400" />
+              <span className="text-2xl font-playfair font-bold gradient-text">FlourishTalents</span>
+            </Link>
           </div>
 
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+          {/* Center Section (Desktop) */}
+          <div className="hidden md:flex flex-1 items-center justify-center">
+            <div className="flex items-center space-x-8">
+              {navLinks.map((link) => {
+                if (!user && (link.label === 'Sign In' || link.label === 'Sign Up')) return null;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      location.pathname === link.path
+                        ? 'text-rose-400 bg-white/10'
+                        : 'text-white hover:text-rose-400 hover:bg-white/5'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right Section (Desktop Actions & Mobile Button) */}
+          <div className="flex-1 flex items-center justify-end">
+            <div className="hidden md:flex items-center space-x-4">
+              {!user && (
+                <Link to="/signup" className="text-white hover:text-rose-400">
+                  <UserPlus className="w-6 h-6" />
+                </Link>
+              )}
+              {user && (
+                <>
+                  <button className="p-2 rounded-full text-white hover:bg-white/10 transition-colors">
+                    <Bell className="w-5 h-5" />
+                  </button>
+                  <div className="relative">
+                    <button
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-white/10 transition-all"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-400 to-purple-500 flex items-center justify-center">
+                        {user.profileImage ? (
+                          <img src={user.profileImage} alt="Profile" className="w-full h-full rounded-full object-cover" />
+                        ) : (
+                          <User className="w-4 h-4 text-white" />
+                        )}
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm font-medium text-white">{user.name}</div>
+                        <div className={`text-xs flex items-center space-x-1 text-yellow-400`}>
+                          <Star className="w-3 h-3" />
+                          <span>{user.loyaltyPoints} Points</span>
+                        </div>
+                      </div>
+                    </button>
+
+                    {showUserMenu && (
+                      <div className="absolute right-0 mt-2 w-48 glass-effect rounded-lg shadow-xl border border-white/20">
+                        <div className="py-2">
+                          <Link
+                            to="/profile"
+                            className="flex items-center px-4 py-2 text-sm text-white hover:bg-white/10 transition-colors"
+                            onClick={() => setShowUserMenu(false)}
+                          >
+                            <Settings className="w-4 h-4 mr-3" />
+                            Profile Settings
+                          </Link>
+                          <div className="px-4 py-2 text-sm text-gray-300">
+                            Loyalty Points: <span className="text-yellow-400 font-medium">{user.loyaltyPoints}</span>
+                          </div>
+                          <button
+                            onClick={handleSignOut}
+                            className="flex items-center w-full px-4 py-2 text-sm text-red-400 hover:bg-white/10 transition-colors"
+                          >
+                            <LogOut className="w-4 h-4 mr-3" />
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+              >
+                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
