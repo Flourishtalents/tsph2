@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Crown, User, LogOut, Settings, Bell, Star } from 'lucide-react';
+import { Menu, X, Crown, User, LogOut, Settings, Bell, Star, UserPlus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
@@ -73,19 +73,29 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  location.pathname === link.path
-                    ? 'text-rose-400 bg-white/10'
-                    : 'text-white hover:text-rose-400 hover:bg-white/5'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              if (!user && (link.label === 'Sign In')) return null;
+              if (!user && (link.label === 'Sign Up')) {
+                return (
+                  <Link key={link.path} to={link.path} className="text-white hover:text-rose-400">
+                    <UserPlus className="w-6 h-6" />
+                  </Link>
+                )
+              }
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    location.pathname === link.path
+                      ? 'text-rose-400 bg-white/10'
+                      : 'text-white hover:text-rose-400 hover:bg-white/5'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
             
             {user && (
               <>
