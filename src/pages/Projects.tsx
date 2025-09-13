@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Filter, MapPin, Clock, DollarSign, Star, Users, Eye, Briefcase, Building } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Projects() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<'talents' | 'teams'>('talents');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -142,11 +144,16 @@ export default function Projects() {
   });
 
   const handleHire = (id: number, type: 'talent' | 'team') => {
-    if (user?.role === 'creator') {
+    if (!user) {
+      alert('Please sign up or sign in to proceed.');
+      navigate('/signin');
+      return;
+    }
+    if (user.role === 'creator') {
       alert('Application sent!');
       return;
     }
-    if (user?.tier === 'free') {
+    if (user.tier === 'free') {
       alert('Upgrade to Premium to hire talents and teams!');
       return;
     }
