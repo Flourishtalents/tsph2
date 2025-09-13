@@ -41,10 +41,10 @@ function AppContent() {
           <Route path="/signup" element={user ? <Navigate to="/dashboard" /> : <SignUp />} />
           <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/" />} />
           <Route path="/portfolio" element={user ? <Portfolio /> : <Navigate to="/" />} />
-          <Route path="/media" element={user ? <Media /> : <Navigate to="/" />} />
-          <Route path="/masterclass" element={user ? <Masterclass /> : <Navigate to="/" />} />
-          <Route path="/projects" element={user ? <Projects /> : <Navigate to="/" />} />
-          <Route path="/events" element={user ? <Events /> : <Navigate to="/" />} />
+          <Route path="/media" element={<Media />} />
+          <Route path="/masterclass" element={<Masterclass />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/events" element={<Events />} />
           <Route path="/profile" element={user ? <Profile /> : <Navigate to="/" />} />
           <Route path="/creator-membership" element={user ? <CreatorMembership /> : <Navigate to="/" />} />
           <Route path="/member-membership" element={user ? <MemberMembership /> : <Navigate to="/" />} />
