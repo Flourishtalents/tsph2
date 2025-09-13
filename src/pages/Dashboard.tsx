@@ -1,10 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Crown, TrendingUp, Users, Star, Calendar, Briefcase, Play, Award, Plus, ArrowRight } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, TIER_POINTS } from '../context/AuthContext';
 
 export default function Dashboard() {
   const { user } = useAuth();
+
+  const getNextTier = () => {
+    if (!user) return null;
+    if (user.tier === 'free') return 'premium';
+    if (user.tier === 'premium') return 'professional';
+    if (user.tier === 'professional') return 'elite';
+    return null;
+  };
+
+  const nextTier = getNextTier();
+  const pointsNeeded = nextTier ? TIER_POINTS[nextTier as keyof typeof TIER_POINTS] - (user?.loyaltyPoints || 0) : 0;
 
   const quickStats = [
     { label: 'Portfolio Views', value: '2,847', icon: <TrendingUp className="w-5 h-5" />, change: '+12%' },
@@ -62,9 +73,9 @@ export default function Dashboard() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { label: 'Update Portfolio', icon: <Star className="w-5 h-5" />, to: '/portfolio' },
-                  { label: 'Upload Media', icon: <Play className="w-5 h-5" />, to: '/media' },
+                  { label: 'Add Content', icon: <Play className="w-5 h-5" />, to: '/media' },
                   { label: 'Join Masterclass', icon: <Award className="w-5 h-5" />, to: '/masterclass' },
-                  { label: 'Browse Jobs', icon: <Briefcase className="w-5 h-5" />, to: '/hiring' }
+                  { label: 'Browse Projects', icon: <Briefcase className="w-5 h-5" />, to: '/projects' }
                 ].map((action, index) => (
                   <Link
                     key={index}
@@ -139,6 +150,9 @@ export default function Dashboard() {
               
               {user?.tier === 'free' && (
                 <div className="mt-4">
+                  <div className="text-center text-sm text-gray-300 mb-2">
+                    You are {pointsNeeded > 0 ? pointsNeeded : 0} points away from {nextTier}!
+                  </div>
                   <button className="w-full py-2 bg-gradient-to-r from-rose-500 to-purple-600 text-white font-medium rounded-lg hover:shadow-lg transition-all">
                     Upgrade to Premium
                   </button>

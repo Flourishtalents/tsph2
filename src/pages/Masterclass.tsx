@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Play, Clock, Users, Award, Star, BookOpen, Filter, Search, CheckCircle, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -6,18 +7,21 @@ export default function Masterclass() {
   const { user } = useAuth();
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showMentorshipModal, setShowMentorshipModal] = useState(false);
+  const [mentorshipRequestSent, setMentorshipRequestSent] = useState(false);
 
   const categories = [
     'all',
     'digital-marketing',
     'brand-ambassador',
     'media-communications',
+    'modelling',
     'acting',
-    'creative-literature',
+    'film-video-production',
+    'audio-production',
     'music',
     'dance',
-    'modelling',
-    'film-video-production',
+    'literary-culture',
     'event-management',
     'marketing-advertising',
     'research-innovation',
@@ -40,7 +44,7 @@ export default function Masterclass() {
       level: 'Beginner to Advanced',
       thumbnail: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400',
       description: 'Master the art of digital marketing with hands-on projects and real-world case studies.',
-      features: ['Live Sessions', 'Projects', 'Certification', 'Career Guidance'],
+      features: ['Live Sessions', 'Projects', 'Certification'],
       isEnrolled: false,
       progress: 0
     },
@@ -79,6 +83,23 @@ export default function Masterclass() {
       progress: 0
     },
     {
+      id: 5,
+      title: 'The Art of Modelling',
+      instructor: 'Alex Chen',
+      category: 'modelling',
+      duration: '8 weeks',
+      lessons: 20,
+      students: 350,
+      rating: 4.8,
+      price: 820000,
+      level: 'Beginner',
+      thumbnail: 'https://images.pexels.com/photos/375880/pexels-photo-375880.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Master the runway, posing techniques, and the business of modeling.',
+      features: ['Posing Techniques', 'Runway Walk', 'Portfolio Development'],
+      isEnrolled: false,
+      progress: 0
+    },
+    {
       id: 4,
       title: 'Acting for Screen & Stage',
       instructor: 'Isabella Martinez',
@@ -92,6 +113,57 @@ export default function Masterclass() {
       thumbnail: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=400',
       description: 'Develop your acting skills with professional techniques and industry insights.',
       features: ['Scene Work', 'Audition Prep', 'Industry Connections', 'Demo Reel'],
+      isEnrolled: false,
+      progress: 0
+    },
+    {
+      id: 6,
+      title: 'Film & Video Production Essentials',
+      instructor: 'David Lee',
+      category: 'film-video-production',
+      duration: '10 weeks',
+      lessons: 25,
+      students: 550,
+      rating: 4.9,
+      price: 980000,
+      level: 'Beginner to Intermediate',
+      thumbnail: 'https://images.pexels.com/photos/265685/pexels-photo-265685.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Learn the fundamentals of filmmaking, from pre-production to post-production.',
+      features: ['Cinematography', 'Editing', 'Sound Design', 'Directing'],
+      isEnrolled: false,
+      progress: 0
+    },
+    {
+      id: 7,
+      title: 'Audio Production for Creatives',
+      instructor: 'Jasmine Carter',
+      category: 'audio-production',
+      duration: '8 weeks',
+      lessons: 20,
+      students: 400,
+      rating: 4.8,
+      price: 720000,
+      level: 'All Levels',
+      thumbnail: 'https://images.pexels.com/photos/3971985/pexels-photo-3971985.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Master audio recording, editing, and mixing for music, podcasts, and video.',
+      features: ['DAW Basics', 'Mixing Techniques', 'Mastering', 'Sound Engineering'],
+      isEnrolled: false,
+      progress: 0
+    },
+    {
+      id: 8,
+      title: 'Music Theory & Composition',
+      instructor: 'Dr. Michael Chen',
+      category: 'music',
+      duration: '12 weeks',
+      lessons: 30,
+      students: 300,
+      rating: 4.9,
+      price: 1200000,
+      level: 'Intermediate to Advanced',
+      thumbnail: 'https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=400',
+      description: 'Deepen your understanding of music theory and learn advanced composition techniques.',
+      features: ['Harmony', 'Counterpoint', 'Orchestration', 'Songwriting'],
       isEnrolled: false,
       progress: 0
     }
@@ -137,12 +209,12 @@ export default function Masterclass() {
     alert('Enrollment successful! Welcome to the masterclass.');
   };
 
-  const handleRequestGuidance = () => {
-    if (user?.tier === 'free') {
-      alert('Career guidance is available for Premium members. You can also request it as a free member - our team will review your request.');
-    } else {
-      alert('Career guidance request submitted! A mentor will contact you within 24 hours.');
-    }
+  const handleMentorshipRequest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically make an API call
+    // For now, we'll just simulate a delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setMentorshipRequestSent(true);
   };
 
   return (
@@ -154,20 +226,38 @@ export default function Masterclass() {
           <p className="text-gray-300">Learn from industry experts and advance your career</p>
         </div>
 
-        {/* Career Guidance CTA */}
+        {/* Mentorship CTA */}
         <div className="glass-effect p-6 rounded-2xl mb-8 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
-              <h3 className="text-xl font-semibold text-white mb-2">Need Career Guidance?</h3>
-              <p className="text-gray-300">Get personalized mentorship or consult from industry professionals</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Need Mentorship?</h3>
+              <p className="text-gray-300">Get personalized guidance from industry professionals.</p>
             </div>
             <button
-              onClick={handleRequestGuidance}
+              onClick={() => {
+                setShowMentorshipModal(true);
+                setMentorshipRequestSent(false);
+              }}
               className="mt-4 md:mt-0 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
             >
               Request Mentorship
             </button>
           </div>
+        </div>
+
+        {/* Community Support CTA */}
+        <div className="glass-effect p-6 rounded-2xl mb-8 bg-gradient-to-r from-blue-500/20 to-teal-500/20 border border-blue-400/30">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+            <div>
+                <h3 className="text-xl font-semibold text-white mb-2">Community Support</h3>
+                <p className="text-gray-300">Have questions? Get help from our community of creators and experts.</p>
+            </div>
+            <button
+                className="mt-4 md:mt-0 px-6 py-3 bg-gradient-to-r from-blue-500 to-teal-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
+            >
+                Ask the Community
+            </button>
+            </div>
         </div>
 
         {/* Search and Filters */}
@@ -260,6 +350,12 @@ export default function Masterclass() {
                           {feature}
                         </span>
                       ))}
+                      <Link
+                        to={`/career-guidance/${course.id}`}
+                        className="px-2 py-1 bg-blue-400/20 text-blue-300 text-xs rounded"
+                      >
+                        Career Guidance
+                      </Link>
                     </div>
 
                     {/* Progress Bar (if enrolled) */}
@@ -367,6 +463,61 @@ export default function Masterclass() {
           </div>
         </div>
       </div>
+      {/* Mentorship Modal */}
+      {showMentorshipModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="glass-effect p-6 rounded-2xl max-w-md w-full">
+              {!mentorshipRequestSent ? (
+              <>
+                  <h3 className="text-xl font-semibold text-white mb-4">Request Mentorship</h3>
+                  <p className="text-gray-300 mb-4">
+                  Fill out the form below to request a mentorship session.
+                  </p>
+                  <form
+              onSubmit={handleMentorshipRequest}
+                  >
+                  <div className="space-y-4">
+                      <textarea
+                      className="w-full h-24 bg-transparent border border-gray-600 rounded-lg p-3 text-white resize-none focus:border-rose-400 outline-none"
+                      placeholder="What do you need help with?"
+                      required
+                      ></textarea>
+                      <button
+                      type="submit"
+                      className="w-full py-3 bg-gradient-to-r from-rose-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl transition-all"
+                      >
+                      Submit Request
+                      </button>
+                  </div>
+                  </form>
+              </>
+              ) : (
+              <div>
+                  <h3 className="text-xl font-semibold text-white mb-4">Request Sent!</h3>
+                  <p className="text-gray-300 mb-4">
+                  Your mentorship request has been received for review. We will notify you once it's approved.
+                  </p>
+                  <p className="text-yellow-400 text-sm mb-4">
+                  Please note: Mentorship is a premium feature.
+                  </p>
+                  <div className="flex space-x-3">
+                  <button
+                      onClick={() => setShowMentorshipModal(false)}
+                      className="flex-1 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                  >
+                      Close
+                  </button>
+                  <button
+                      className="flex-1 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold rounded-xl hover:shadow-xl transition-all"
+                  >
+                      Upgrade to Premium
+                  </button>
+                  </div>
+              </div>
+              )}
+          </div>
+          </div>
+      )}
     </div>
   );
 }

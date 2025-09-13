@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera, Edit3, Eye, EyeOff, Plus, Star, Award, MapPin, Phone, Mail, Globe, Instagram, Twitter, Linkedin, Save, Upload, X } from 'lucide-react';
+import { Camera, Edit3, Eye, EyeOff, Plus, Star, Award, MapPin, Phone, Mail, Globe, Instagram, Twitter, Linkedin, Save, Upload, X, Mic } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Portfolio() {
@@ -66,6 +66,14 @@ export default function Portfolio() {
         rating: 5,
         comment: 'Exceptional work quality and professional approach. Highly recommended!'
       }
+    ],
+    awards: [
+      { name: 'Creative of the Year', issuer: 'FlourishTalents Awards', year: '2025' },
+      { name: 'Best Marketing Campaign', issuer: 'Digital Media Awards', year: '2024' },
+    ],
+    interviews: [
+      { title: 'The Future of Branding', platform: 'Creative Minds Podcast', date: '2025-10-15' },
+      { title: 'A Journey in Digital Marketing', platform: 'The Marketing Show', date: '2025-09-01' },
     ]
   });
 
@@ -267,6 +275,38 @@ export default function Portfolio() {
               </div>
             </div>
 
+            {/* Awards & Recognitions */}
+            <div className="glass-effect p-6 rounded-2xl">
+              <h3 className="text-xl font-semibold text-white mb-4">Awards & Recognitions</h3>
+              <div className="space-y-3">
+                {portfolioData.awards.map((award, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <Award className="w-5 h-5 text-yellow-400 mt-1" />
+                    <div>
+                      <div className="text-white font-medium">{award.name}</div>
+                      <div className="text-gray-400 text-sm">{award.issuer} • {award.year}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Interviews & Features */}
+            <div className="glass-effect p-6 rounded-2xl">
+              <h3 className="text-xl font-semibold text-white mb-4">Interviews & Features</h3>
+              <div className="space-y-3">
+                {portfolioData.interviews.map((interview, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <Mic className="w-5 h-5 text-blue-400 mt-1" />
+                    <div>
+                      <div className="text-white font-medium">{interview.title}</div>
+                      <div className="text-gray-400 text-sm">{interview.platform} • {new Date(interview.date).toLocaleDateString()}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Skills */}
             <div className="glass-effect p-6 rounded-2xl">
               <div className="flex justify-between items-center mb-4">
@@ -333,10 +373,10 @@ export default function Portfolio() {
               )}
             </div>
 
-            {/* Portfolio Gallery */}
+            {/* Highlights */}
             <div className="glass-effect p-6 rounded-2xl">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-semibold text-white">Portfolio</h3>
+                <h3 className="text-xl font-semibold text-white">Highlights</h3>
                 {isEditing && (
                   <button className="px-4 py-2 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all">
                     <Plus className="w-4 h-4 mr-2 inline" />

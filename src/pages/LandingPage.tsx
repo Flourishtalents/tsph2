@@ -110,6 +110,74 @@ export default function LandingPage() {
         </div>
       </div>
 
+      {/* Featured Releases Section */}
+      <div className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+            <h2 className="text-4xl font-playfair font-bold text-white mb-6">
+            Featured <span className="gradient-text">Releases</span>
+            </h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            Check out the latest and greatest from our talented creators.
+            </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+            {
+                type: 'Music',
+                title: 'Midnight Drive',
+                creator: 'DJ Alex',
+                thumbnail: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=400'
+            },
+            {
+                type: 'Video',
+                title: 'City of Dreams',
+                creator: 'FilmMaker Jane',
+                thumbnail: 'https://images.pexels.com/photos/269140/pexels-photo-269140.jpeg?auto=compress&cs=tinysrgb&w=400'
+            },
+            {
+                type: 'Art',
+                title: 'Abstract Dimensions',
+                creator: 'Artisan Sam',
+                thumbnail: 'https://images.pexels.com/photos/1616403/pexels-photo-1616403.jpeg?auto=compress&cs=tinysrgb&w=400'
+            },
+            {
+                type: 'Podcast',
+                title: 'The Creative Journey',
+                creator: 'Host Maria',
+                thumbnail: 'https://images.pexels.com/photos/417273/pexels-photo-417273.jpeg?auto=compress&cs=tinysrgb&w=400'
+            }
+            ].map((release, index) => (
+            <div key={index} className="glass-effect rounded-2xl overflow-hidden hover-lift group">
+                <div className="relative aspect-video bg-gray-800">
+                <img src={release.thumbnail} alt={release.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Play className="w-12 h-12 text-white" />
+                </div>
+                <div className="absolute top-2 left-2 px-2 py-1 bg-rose-500/80 text-white text-xs font-bold rounded-full">
+                    {release.type}
+                </div>
+                </div>
+                <div className="p-4">
+                <h3 className="text-white font-semibold mb-1">{release.title}</h3>
+                <p className="text-gray-400 text-sm">by {release.creator}</p>
+                </div>
+            </div>
+            ))}
+        </div>
+
+        <div className="text-center mt-12">
+            <Link
+            to="/media"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-rose-600 hover:bg-rose-700"
+            >
+            View More
+            </Link>
+        </div>
+        </div>
+    </div>
+
       {/* Membership Tiers */}
       <div className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
