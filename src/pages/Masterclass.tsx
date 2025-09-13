@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Play, Clock, Users, Award, Star, BookOpen, Filter, Search, CheckCircle, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Masterclass() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showMentorshipModal, setShowMentorshipModal] = useState(false);
@@ -202,7 +203,12 @@ export default function Masterclass() {
   });
 
   const handleEnroll = (courseId: number) => {
-    if (user?.tier === 'free') {
+    if (!user) {
+      alert('Please sign up or sign in to enroll.');
+      navigate('/signin');
+      return;
+    }
+    if (user.tier === 'free') {
       alert('Upgrade to Premium to access masterclasses!');
       return;
     }
@@ -235,6 +241,11 @@ export default function Masterclass() {
             </div>
             <button
               onClick={() => {
+                if (!user) {
+                  alert('Please sign up or sign in to request mentorship.');
+                  navigate('/signin');
+                  return;
+                }
                 setShowMentorshipModal(true);
                 setMentorshipRequestSent(false);
               }}

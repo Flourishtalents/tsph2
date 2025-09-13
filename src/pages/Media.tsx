@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Play, Image, Headphones, ShoppingBag, Heart, Share2, MessageCircle, Eye, Filter, Search, Star, Download, Rss } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Media() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('stream');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -140,14 +142,29 @@ export default function Media() {
   ];
 
   const handleFollow = (creatorId: string) => {
+    if (!user) {
+      alert('Please sign up or sign in to follow creators.');
+      navigate('/signin');
+      return;
+    }
     alert('Following creator! You will receive notifications for new content.');
   };
 
   const handleTip = (creatorId: string) => {
+    if (!user) {
+      alert('Please sign up or sign in to tip creators.');
+      navigate('/signin');
+      return;
+    }
     alert('Tip feature coming soon! Support your favorite creators.');
   };
 
   const handleSubscribe = (creatorId: string) => {
+    if (!user) {
+      alert('Please sign up or sign in to subscribe.');
+      navigate('/signin');
+      return;
+    }
     alert('Premium subscription activated! Enjoy exclusive content.');
   };
 
