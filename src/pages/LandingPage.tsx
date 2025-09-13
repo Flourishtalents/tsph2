@@ -43,11 +43,11 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center space-x-2">
               <Users className="w-5 h-5 text-blue-400" />
-              <span>50k+ Active Talents</span>
+              <span>Global Audience</span>
             </div>
             <div className="flex items-center space-x-2">
               <Award className="w-5 h-5 text-yellow-400" />
-              <span>Industry Recognized</span>
+              <span>Certification</span>
             </div>
           </div>
         </div>

@@ -14,49 +14,49 @@ export default function Media() {
     stream: [
       {
         id: 1,
-        title: 'Digital Marketing Masterclass Preview',
-        creator: 'Emma Wilson',
-        thumbnail: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400',
-        duration: '15:30',
-        views: 12500,
-        likes: 890,
-        category: 'education',
+        title: 'Cyber City - Official Music Video',
+        creator: 'Jasmine Carter',
+        thumbnail: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=400',
+        duration: '4:15',
+        views: 150000,
+        likes: 12000,
+        category: 'music-video',
         isPremium: false,
-        type: 'movie'
+        type: 'music-video'
       },
       {
         id: 2,
-        title: 'Behind the Scenes: Fashion Shoot',
-        creator: 'Sofia Rodriguez',
-        thumbnail: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400',
-        duration: '8:45',
-        views: 8900,
-        likes: 654,
-        category: 'lifestyle',
+        title: 'The Last Stand - Short Film',
+        creator: 'David Lee',
+        thumbnail: 'https://images.pexels.com/photos/269140/pexels-photo-269140.jpeg?auto=compress&cs=tinysrgb&w=400',
+        duration: '12:30',
+        views: 89000,
+        likes: 7500,
+        category: 'movie',
         isPremium: true,
-        type: 'music-video'
+        type: 'movie'
       }
     ],
     listen: [
       {
         id: 1,
-        title: 'People in Tech: Breaking Barriers',
-        creator: 'Dr. Sarah Johnson',
-        thumbnail: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=400',
-        duration: '45:20',
-        plays: 5600,
-        category: 'business',
+        title: 'Sunset Groove',
+        creator: 'DJ Alex',
+        thumbnail: 'https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=400',
+        duration: '3:45',
+        plays: 25000,
+        category: 'electronic',
         isPremium: false,
-        type: 'podcast'
+        type: 'audio-music'
       },
       {
         id: 2,
-        title: 'Creative Minds Anthem',
-        creator: 'The Flourish Band',
-        thumbnail: 'https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=400',
-        duration: '3:15',
-        plays: 12000,
-        category: 'music',
+        title: 'Acoustic Soul',
+        creator: 'Maya Patel',
+        thumbnail: 'https://images.pexels.com/photos/417273/pexels-photo-417273.jpeg?auto=compress&cs=tinysrgb&w=400',
+        duration: '2:50',
+        plays: 18000,
+        category: 'acoustic',
         isPremium: false,
         type: 'audio-music'
       }
@@ -104,23 +104,23 @@ export default function Media() {
       },
       {
         id: 2,
-        title: 'Brand Strategy Workbook',
-        creator: 'Marketing Maven',
-        image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=400',
+        title: 'Producer\'s Essential Sound Kit',
+        creator: 'Beat Crafters',
+        image: 'https://images.pexels.com/photos/3971985/pexels-photo-3971985.jpeg?auto=compress&cs=tinysrgb&w=400',
         price: 190000,
         rating: 4.9,
         sales: 890,
-        category: 'ebooks'
+        category: 'sound-kit'
       },
       {
           id: 3,
-          title: 'Cinematic LUTs Pack',
-          creator: 'Color Grade Co.',
-          image: 'https://images.pexels.com/photos/4057663/pexels-photo-4057663.jpeg?auto=compress&cs=tinysrgb&w=400',
+          title: 'Freelance Contract Template',
+          creator: 'Legal Eagles',
+          image: 'https://images.pexels.com/photos/1181257/pexels-photo-1181257.jpeg?auto=compress&cs=tinysrgb&w=400',
           price: 95000,
           rating: 4.7,
           sales: 540,
-          category: 'presets'
+          category: 'templates'
       }
     ]
   };

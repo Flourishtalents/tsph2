@@ -112,7 +112,7 @@ export default function Portfolio() {
         {/* Header Controls */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-playfair font-bold text-white mb-2">My Portfolio</h1>
+            <h1 className="text-4xl font-playfair font-bold text-white mb-2">My Highlights</h1>
             <p className="text-gray-300">Showcase your talent to the world</p>
           </div>
           

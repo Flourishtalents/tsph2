@@ -73,7 +73,7 @@ export default function Dashboard() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { label: 'Update Portfolio', icon: <Star className="w-5 h-5" />, to: '/portfolio' },
-                  { label: 'Add Content', icon: <Play className="w-5 h-5" />, to: '/media' },
+                  { label: 'Add Content', icon: <Play className="w-5 h-5" />, to: '/content' },
                   { label: 'Join Masterclass', icon: <Award className="w-5 h-5" />, to: '/masterclass' },
                   { label: 'Browse Projects', icon: <Briefcase className="w-5 h-5" />, to: '/projects' }
                 ].map((action, index) => (

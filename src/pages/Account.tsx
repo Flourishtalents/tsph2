@@ -8,8 +8,8 @@ export default function Account() {
   ];
 
   const playlists = [
-    { id: 1, name: 'Chill Vibes', content: [{ type: 'music', title: 'Midnight Drive' }, { type: 'music', title: 'Creative Minds Anthem' }] },
-    { id: 2, name: 'Inspiration', content: [{ type: 'video', title: 'City of Dreams' }, { type: 'podcast', title: 'The Creative Journey' }] },
+    { id: 1, name: 'Chill Vibes', content: [{ type: 'music', title: 'Sunset Groove' }, { type: 'music', title: 'Acoustic Soul' }] },
+    { id: 2, name: 'Inspiration', content: [{ type: 'video', title: 'The Last Stand - Short Film' }, { type: 'blog', title: '10 Tips for a Killer Personal Brand' }] },
   ];
 
   return (

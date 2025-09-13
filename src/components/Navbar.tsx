@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Crown, User, LogOut, Settings, Bell, Star, UserPlus } from 'lucide-react';
+import { Menu, X, Crown, User, LogOut, Settings, Bell, Star, UserPlus, LogIn } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
