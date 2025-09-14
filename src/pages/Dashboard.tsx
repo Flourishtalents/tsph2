@@ -75,7 +75,7 @@ export default function Dashboard() {
                   { label: 'Update Portfolio', icon: <Star className="w-5 h-5" />, to: '/portfolio' },
                   { label: 'Add Content', icon: <Play className="w-5 h-5" />, to: '/content' },
                   { label: 'Join Masterclass', icon: <Award className="w-5 h-5" />, to: '/masterclass' },
-                  { label: 'Browse Projects', icon: <Briefcase className="w-5 h-5" />, to: '/projects' }
+                  { label: 'Browse Jobs', icon: <Briefcase className="w-5 h-5" />, to: '/hiring' }
                 ].map((action, index) => (
                   <Link
                     key={index}

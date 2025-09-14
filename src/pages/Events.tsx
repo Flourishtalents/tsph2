@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Clock, Users, Ticket, Star, Filter, Search, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Events() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('upcoming');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -98,11 +96,6 @@ export default function Events() {
   });
 
   const handleRegister = (eventId: number) => {
-    if (!user) {
-      alert('Please sign up or sign in to register for events.');
-      navigate('/signin');
-      return;
-    }
     const event = events.find(e => e.id === eventId);
     if (event?.registered >= event?.capacity) {
       alert('Sorry, this event is fully booked!');
@@ -112,11 +105,6 @@ export default function Events() {
   };
 
   const handleSubmitEvent = () => {
-    if (!user) {
-      alert('Please sign up or sign in to submit events.');
-      navigate('/signin');
-      return;
-    }
     alert('Event submission feature coming soon! Contact our team for now.');
   };
 
@@ -197,7 +185,7 @@ export default function Events() {
             <div key={event.id} className="glass-effect rounded-2xl overflow-hidden hover-lift">
               {/* Event Image */}
               <div className="relative h-48 bg-gray-800">
-                <img loading="lazy" src={event.image} alt={event.title} className="w-full h-full object-cover" />
+                <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-rose-500 text-white text-sm font-medium rounded-full">
                     {event.category.toUpperCase()}

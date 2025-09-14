@@ -253,7 +253,6 @@ export default function Masterclass() {
           <p className="text-gray-300">Learn from industry experts and advance your career</p>
         </div>
 
-
         {/* Search and Filters */}
         <div className="flex flex-col lg:flex-row gap-4 mb-8">
           <div className="flex-1 relative">
@@ -293,7 +292,7 @@ export default function Masterclass() {
                 <div key={course.id} className="glass-effect rounded-2xl overflow-hidden hover-lift">
                   {/* Thumbnail */}
                   <div className="relative aspect-video bg-gray-800">
-                    <img loading="lazy" src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
+                    <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
                       <Play className="w-12 h-12 text-white" />
                     </div>
@@ -344,12 +343,6 @@ export default function Masterclass() {
                           {feature}
                         </span>
                       ))}
-                      <Link
-                        to={`/career-guidance/${course.id}`}
-                        className="px-2 py-1 bg-blue-400/20 text-blue-300 text-xs rounded"
-                      >
-                        Career Guidance
-                      </Link>
                     </div>
 
                     {/* Progress Bar (if enrolled) */}
@@ -398,7 +391,7 @@ export default function Masterclass() {
               <div className="space-y-3">
                 {masterclasses.filter(c => c.isEnrolled).map((course) => (
                   <div key={course.id} className="flex items-center space-x-3 p-3 hover:bg-white/5 rounded-lg transition-colors">
-                    <img loading="lazy" src={course.thumbnail} alt={course.title} className="w-12 h-12 rounded-lg object-cover" />
+                    <img src={course.thumbnail} alt={course.title} className="w-12 h-12 rounded-lg object-cover" />
                     <div className="flex-1">
                       <div className="text-white text-sm font-medium line-clamp-1">{course.title}</div>
                       <div className="text-gray-200 text-xs">{course.progress}% complete</div>

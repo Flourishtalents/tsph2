@@ -9,7 +9,7 @@ export default function SignUp() {
     email: '',
     password: '',
     confirmPassword: '',
-    accountType: 'creator' as 'creator' | 'member',
+    accountType: 'talent' as 'talent' | 'user' | 'agency',
     agreeTerms: false
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -34,16 +34,22 @@ export default function SignUp() {
 
   const accountTypes = [
     {
-      type: 'creator',
+      type: 'talent',
       icon: <Crown className="w-8 h-8" />,
-      title: 'Creator',
+      title: 'Talent',
       description: 'Showcase your skills and get hired'
     },
     {
-      type: 'member',
+      type: 'user',
       icon: <User className="w-8 h-8" />,
-      title: 'Member',
-      description: 'Find and support talented professionals'
+      title: 'Client',
+      description: 'Find and hire talented professionals'
+    },
+    {
+      type: 'agency',
+      icon: <Building className="w-8 h-8" />,
+      title: 'Agency',
+      description: 'Manage teams and provide services'
     }
   ];
 

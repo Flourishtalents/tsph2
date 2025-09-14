@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Play, Image, Headphones, ShoppingBag, Heart, Share2, MessageCircle, Eye, Filter, Search, Star, Download, Rss } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Media() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('stream');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -142,29 +140,14 @@ export default function Media() {
   ];
 
   const handleFollow = (creatorId: string) => {
-    if (!user) {
-      alert('Please sign up or sign in to follow creators.');
-      navigate('/signin');
-      return;
-    }
     alert('Following creator! You will receive notifications for new content.');
   };
 
   const handleTip = (creatorId: string) => {
-    if (!user) {
-      alert('Please sign up or sign in to tip creators.');
-      navigate('/signin');
-      return;
-    }
     alert('Tip feature coming soon! Support your favorite creators.');
   };
 
   const handleSubscribe = (creatorId: string) => {
-    if (!user) {
-      alert('Please sign up or sign in to subscribe.');
-      navigate('/signin');
-      return;
-    }
     alert('Premium subscription activated! Enjoy exclusive content.');
   };
 
@@ -231,24 +214,20 @@ export default function Media() {
               {/* Thumbnail/Image */}
               <div className="relative aspect-video bg-gray-800">
                 <img 
-                  loading="lazy"
-                  src={activeTab === 'stream' ? item.thumbnail : activeTab === 'listen' ? item.thumbnail : activeTab === 'blog' ? item.thumbnail : item.image}
+                  src={activeTab === 'streaming' ? item.thumbnail : activeTab === 'podcast' ? item.thumbnail : item.image}
                   alt={item.title} 
                   className="w-full h-full object-cover"
                 />
                 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  {activeTab === 'stream' && (
+                  {activeTab === 'streaming' && (
                     <Play className="w-12 h-12 text-white" />
                   )}
-                  {activeTab === 'listen' && (
+                  {activeTab === 'podcast' && (
                     <Headphones className="w-12 h-12 text-white" />
                   )}
-                  {activeTab === 'blog' && (
-                    <Rss className="w-12 h-12 text-white" />
-                  )}
-                  {activeTab === 'resources' && (
+                  {activeTab === 'products' && (
                     <ShoppingBag className="w-12 h-12 text-white" />
                   )}
                 </div>
@@ -261,14 +240,9 @@ export default function Media() {
                 )}
 
                 {/* Duration/Info */}
-                {(activeTab === 'stream' || activeTab === 'listen') && (
+                {(activeTab === 'streaming' || activeTab === 'podcast') && (
                   <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/70 text-white text-xs rounded">
                     {item.duration}
-                  </div>
-                )}
-                {activeTab === 'blog' && (
-                  <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/70 text-white text-xs rounded">
-                    {item.readTime}
                   </div>
                 )}
               </div>
@@ -280,7 +254,7 @@ export default function Media() {
 
                 {/* Stats */}
                 <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
-                  {activeTab === 'stream' && (
+                  {activeTab === 'streaming' && (
                     <>
                       <div className="flex items-center space-x-1">
                         <Eye className="w-4 h-4" />
@@ -292,18 +266,7 @@ export default function Media() {
                       </div>
                     </>
                   )}
-                  {activeTab === 'listen' && (
-                    <div className="flex items-center space-x-1">
-                      <Play className="w-4 h-4" />
-                      <span>{item.plays} plays</span>
-                    </div>
-                  )}
-                  {activeTab === 'blog' && (
-                    <div className="flex items-center space-x-1">
-                      <MessageCircle className="w-4 h-4" />
-                      <span>{Math.floor(Math.random() * 100)}</span>
-                    </div>
-                  )}
+
                   {activeTab === 'gallery' && (
                     <div className="flex items-center space-x-1">
                       <Heart className="w-4 h-4" />
@@ -311,7 +274,14 @@ export default function Media() {
                     </div>
                   )}
                   
-                  {activeTab === 'resources' && (
+                  {activeTab === 'podcast' && (
+                    <div className="flex items-center space-x-1">
+                      <Play className="w-4 h-4" />
+                      <span>{item.plays} plays</span>
+                    </div>
+                  )}
+
+                  {activeTab === 'products' && (
                     <>
                       <div className="flex items-center space-x-1">
                         <Star className="w-4 h-4 text-yellow-400" />
@@ -324,7 +294,7 @@ export default function Media() {
 
                 {/* Action Buttons */}
                 <div className="flex space-x-2">
-                  {activeTab === 'resources' ? (
+                  {activeTab === 'products' ? (
                     <>
                       <button className="flex-1 py-2 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all text-sm font-medium">
                         Buy Now
@@ -375,11 +345,10 @@ export default function Media() {
         {mediaContent[activeTab as keyof typeof mediaContent]?.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
-              {activeTab === 'stream' && <Play className="w-16 h-16 mx-auto mb-4" />}
-              {activeTab === 'listen' && <Headphones className="w-16 h-16 mx-auto mb-4" />}
-              {activeTab === 'blog' && <Rss className="w-16 h-16 mx-auto mb-4" />}
+              {activeTab === 'streaming' && <Play className="w-16 h-16 mx-auto mb-4" />}
               {activeTab === 'gallery' && <Image className="w-16 h-16 mx-auto mb-4" />}
-              {activeTab === 'resources' && <ShoppingBag className="w-16 h-16 mx-auto mb-4" />}
+              {activeTab === 'podcast' && <Headphones className="w-16 h-16 mx-auto mb-4" />}
+              {activeTab === 'products' && <ShoppingBag className="w-16 h-16 mx-auto mb-4" />}
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">No content available</h3>
             <p className="text-gray-400">Check back later for new {activeTab} content!</p>
