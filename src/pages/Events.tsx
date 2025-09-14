@@ -197,7 +197,7 @@ export default function Events() {
             <div key={event.id} className="glass-effect rounded-2xl overflow-hidden hover-lift">
               {/* Event Image */}
               <div className="relative h-48 bg-gray-800">
-                <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
+                <img loading="lazy" src={event.image} alt={event.title} className="w-full h-full object-cover" />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 bg-rose-500 text-white text-sm font-medium rounded-full">
                     {event.category.toUpperCase()}

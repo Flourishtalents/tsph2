@@ -231,6 +231,7 @@ export default function Media() {
               {/* Thumbnail/Image */}
               <div className="relative aspect-video bg-gray-800">
                 <img 
+                  loading="lazy"
                   src={activeTab === 'stream' ? item.thumbnail : activeTab === 'listen' ? item.thumbnail : activeTab === 'blog' ? item.thumbnail : item.image}
                   alt={item.title} 
                   className="w-full h-full object-cover"

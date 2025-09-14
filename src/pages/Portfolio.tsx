@@ -164,7 +164,7 @@ export default function Portfolio() {
         <div className="relative mb-8">
           <div className="h-64 bg-gradient-to-r from-rose-400 via-purple-500 to-pink-500 rounded-2xl overflow-hidden">
             {portfolioData.coverImage ? (
-              <img src={portfolioData.coverImage} alt="Cover" className="w-full h-full object-cover" />
+              <img loading="lazy" src={portfolioData.coverImage} alt="Cover" className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center text-white">
@@ -192,7 +192,7 @@ export default function Portfolio() {
                   <div className="w-32 h-32 rounded-full bg-gradient-to-r from-rose-400 to-purple-500 p-1">
                     <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center overflow-hidden">
                       {portfolioData.profileImage ? (
-                        <img src={portfolioData.profileImage} alt="Profile" className="w-full h-full object-cover" />
+                        <img loading="lazy" src={portfolioData.profileImage} alt="Profile" className="w-full h-full object-cover" />
                       ) : (
                         <Camera className="w-8 h-8 text-gray-400" />
                       )}
@@ -389,7 +389,7 @@ export default function Portfolio() {
                 {portfolioData.portfolio.map((item) => (
                   <div key={item.id} className="group relative">
                     <div className="aspect-video bg-gray-800 rounded-xl overflow-hidden">
-                      <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
+                      <img loading="lazy" src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <button
                           onClick={() => handleSendToMedia(item)}
