@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { User, Mail, Phone, MapPin, Calendar, Crown, Star, Gift, Share2, Edit3, Save, Camera, Shield, Bell, CreditCard, RefreshCw } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Calendar, Crown, Star, Gift, Share2, Edit3, Save, Camera, Shield, Bell, CreditCard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Profile() {
-  const { user, updateUser, switchRole } = useAuth();
+  const { user, updateUser } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
   
@@ -245,25 +245,6 @@ export default function Profile() {
 
             {activeTab === 'account' && (
               <div className="space-y-6">
-                {/* Account Switcher */}
-                <div className="glass-effect rounded-2xl p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white">Account Type</h3>
-                      <p className="text-gray-300">
-                        Your current role is: <span className="font-semibold capitalize">{user?.role}</span>
-                      </p>
-                    </div>
-                    <button
-                      onClick={switchRole}
-                      className="px-4 py-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white rounded-lg hover:shadow-lg transition-all flex items-center space-x-2"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                      <span>Switch to {user?.role === 'creator' ? 'Member' : 'Creator'}</span>
-                    </button>
-                  </div>
-                </div>
-
                 {/* Membership Status */}
                 <div className="glass-effect rounded-2xl p-6">
                   <h2 className="text-2xl font-semibold text-white mb-6">Membership Status</h2>
