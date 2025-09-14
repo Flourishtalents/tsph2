@@ -6,7 +6,6 @@ import { useAuth } from '../context/AuthContext';
 export default function Projects() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<'talents' | 'teams' | 'projects'>(user?.role === 'creator' ? 'projects' : 'talents');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedBudget, setSelectedBudget] = useState('all');
@@ -211,44 +210,21 @@ export default function Projects() {
         {/* View Toggle and Submit Button */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex space-x-1 glass-effect p-2 rounded-xl w-fit">
-            {user?.role === 'creator' ? (
-              <button
-                onClick={() => setViewMode('projects')}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                  viewMode === 'projects'
-                    ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Briefcase className="w-5 h-5" />
-                <span>Browse Projects</span>
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={() => setViewMode('talents')}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                    viewMode === 'talents'
-                      ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
+            <button
+              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg`}
+            >
+              {user?.role === 'creator' ? (
+                <>
+                  <Briefcase className="w-5 h-5" />
+                  <span>Browse Projects</span>
+                </>
+              ) : (
+                <>
                   <Users className="w-5 h-5" />
-                  <span>Individual Talents</span>
-                </button>
-                <button
-                  onClick={() => setViewMode('teams')}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
-                    viewMode === 'teams'
-                      ? 'bg-gradient-to-r from-rose-500 to-purple-600 text-white shadow-lg'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  <Building className="w-5 h-5" />
-                  <span>Teams & Agencies</span>
-                </button>
-              </>
-            )}
+                  <span>Find Talent</span>
+                </>
+              )}
+            </button>
           </div>
           <button
             onClick={() => {
@@ -306,7 +282,7 @@ export default function Projects() {
 
         {/* Results */}
         <div className="grid lg:grid-cols-3 gap-6">
-          {viewMode === 'projects' ? (
+          {user?.role === 'creator' ? (
             filteredProjects.map((project) => (
               <div key={project.id} className="glass-effect rounded-2xl overflow-hidden hover-lift p-6">
                 <h3 className="text-xl font-semibold text-white">{project.title}</h3>
@@ -336,13 +312,15 @@ export default function Projects() {
                 </div>
               </div>
             ))
-          ) : viewMode === 'talents' ? (
-            filteredTalents.map((talent) => (
+          ) : (
+            <>
+              {filteredTalents.map((talent) => (
               <div key={talent.id} className="glass-effect rounded-2xl overflow-hidden hover-lift">
                 {/* Header */}
                 <div className="p-6 pb-4">
                   <div className="flex items-start space-x-4">
                     <img 
+                      loading="lazy"
                       src={talent.avatar} 
                       alt={talent.name}
                       className="w-16 h-16 rounded-full object-cover"
@@ -442,6 +420,7 @@ export default function Projects() {
                 <div className="p-6 pb-4">
                   <div className="flex items-start space-x-4">
                     <img 
+                      loading="lazy"
                       src={team.logo} 
                       alt={team.name}
                       className="w-16 h-16 rounded-lg object-cover"
@@ -535,16 +514,17 @@ export default function Projects() {
               </div>
             ))
           )}
+            </>
+          )}
         </div>
 
         {/* Empty State */}
-        {((viewMode === 'talents' && filteredTalents.length === 0) || 
-          (viewMode === 'teams' && filteredTeams.length === 0)) && (
+        {((!user && filteredTalents.length === 0) || (user?.role === 'creator' && filteredProjects.length === 0)) && (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
-              {viewMode === 'talents' ? <Users className="w-16 h-16 mx-auto mb-4" /> : <Building className="w-16 h-16 mx-auto mb-4" />}
+              {user?.role === 'creator' ? <Briefcase className="w-16 h-16 mx-auto mb-4" /> : <Users className="w-16 h-16 mx-auto mb-4" />}
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">No {viewMode} found</h3>
+            <h3 className="text-xl font-semibold text-white mb-2">No {user?.role === 'creator' ? 'projects' : 'talents'} found</h3>
             <p className="text-gray-400">Try adjusting your search criteria or filters.</p>
           </div>
         )}

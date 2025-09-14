@@ -151,7 +151,7 @@ export default function LandingPage() {
             ].map((release, index) => (
             <div key={index} className="glass-effect rounded-2xl overflow-hidden hover-lift group">
                 <div className="relative aspect-video bg-gray-800">
-                <img src={release.thumbnail} alt={release.title} className="w-full h-full object-cover" />
+                <img loading="lazy" src={release.thumbnail} alt={release.title} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <Play className="w-12 h-12 text-white" />
                 </div>

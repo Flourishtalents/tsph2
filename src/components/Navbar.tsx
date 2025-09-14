@@ -78,22 +78,19 @@ export default function Navbar() {
           {/* Center Section (Desktop) */}
           <div className="hidden md:flex flex-1 items-center justify-center">
             <div className="flex items-center space-x-8">
-              {navLinks.map((link) => {
-                if (!user && (link.label === 'Sign In' || link.label === 'Sign Up')) return null;
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      location.pathname === link.path
-                        ? 'text-rose-400 bg-white/10'
-                        : 'text-white hover:text-rose-400 hover:bg-white/5'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
+              {navLinks.filter(link => !(!user && (link.label === 'Sign In' || link.label === 'Sign Up'))).map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    location.pathname === link.path
+                      ? 'text-rose-400 bg-white/10'
+                      : 'text-white hover:text-rose-400 hover:bg-white/5'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -101,9 +98,33 @@ export default function Navbar() {
           <div className="flex-1 flex items-center justify-end">
             <div className="hidden md:flex items-center space-x-4">
               {!user && (
-                <Link to="/signup" className="text-white hover:text-rose-400">
-                  <UserPlus className="w-6 h-6" />
-                </Link>
+                <div className="relative">
+                  <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-2 rounded-full text-white hover:bg-white/10 transition-colors">
+                    <User className="w-6 h-6" />
+                  </button>
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-48 glass-effect rounded-lg shadow-xl border border-white/20">
+                      <div className="py-2">
+                        <Link
+                          to="/signin"
+                          className="flex items-center px-4 py-2 text-sm text-white hover:bg-white/10 transition-colors"
+                          onClick={() => setShowUserMenu(false)}
+                        >
+                          <LogIn className="w-4 h-4 mr-3" />
+                          Sign In
+                        </Link>
+                        <Link
+                          to="/signup"
+                          className="flex items-center px-4 py-2 text-sm text-white hover:bg-white/10 transition-colors"
+                          onClick={() => setShowUserMenu(false)}
+                        >
+                          <UserPlus className="w-4 h-4 mr-3" />
+                          Sign Up
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
               {user && (
                 <>
